@@ -1,0 +1,2 @@
+# BelgelemKernelOsuma
+Çekirdeğimi belgeliyorum
