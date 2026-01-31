@@ -30,5 +30,5 @@ The copyright of this kernel belongs to the author. **Closed-source usage or com
 ## 🚀 How to Run (Quick Start)
 1. Ensure you have `nasm` and `gcc` installed.
 2. Compile the source: `make`
-3. Test with QEMU: `qemu-system-i386 -kernel osuma.bin`
+3. Test with QEMU: `qemu-system-i386 -kernel kernel.bin'
 
