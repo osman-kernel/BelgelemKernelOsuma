@@ -1,0 +1,68 @@
+# SPDX-License-Identifier: GPL-2.0
+# Osman-Kernel x86_32 İşlemci Yapılandırma Dosyası
+# Bu dosya Türkiye'nin yerli çekirdeği için optimize edilmiştir.
+
+choice
+	prompt "İşlemci Ailesi Seçimi"
+	default MCORE2
+	help
+	  Çekirdeğin hangi işlemci mimarisi için optimize edileceğini seçin.
+	  Bu seçim, GDT hizalaması ve komut seti optimizasyonlarını etkiler.
+
+config M486
+	bool "486DX / Klasik x86"
+	help
+	  En temel 32-bit desteği. Eski sistemlerle tam uyumluluk sağlar.
+
+config MPENTIUM
+	bool "Pentium / 586 Serisi"
+	help
+	  Intel Pentium Classic ve benzeri işlemciler için optimizasyon sağlar.
+
+config MCORE2
+	bool "Intel Core 2 / Modern x86"
+	help
+	  Modern Intel işlemciler için SSE ve gelişmiş komut setlerini aktif eder.
+	  Genel kullanım için en stabil seçenektir.
+
+config MATOM
+	bool "Intel Atom"
+	help
+	  Düşük güç tüketen Intel Atom işlemciler için özel sıralı (in-order) 
+	  kod optimizasyonu sağlar.
+
+config MATHLON
+	bool "AMD Athlon / K7 / Ryzen (32-bit Mode)"
+	help
+	  AMD tabanlı işlemciler için özel optimizasyon ve komut setleri.
+
+endchoice
+
+# --- İşlemciye Özel Teknik Parametreler ---
+# Bu değerler çekirdek kodunda bellek hizalaması (alignment) için kullanılır.
+
+config X86_L1_CACHE_SHIFT
+	int
+	default "7" if MCORE2 || MATOM
+	default "6" if MATHLON
+	default "5" if MPENTIUM
+	default "4" if M486
+
+config X86_ALIGNMENT_16
+	def_bool y
+	depends on M486 || MPENTIUM
+	help
+	  Eski işlemcilerde bellek erişimini hızlandırmak için 16-byte hizalama sağlar.
+
+config X86_USE_PPRO_CHECKSUM
+	def_bool y
+	depends on !M486
+	help
+	  Modern işlemcilerde daha hızlı checksum (denetim toplamı) hesaplama yöntemini açar.
+
+config X86_CMOV
+	def_bool y
+	depends on !M486
+	help
+	  İşlemcinin 'Conditional Move' (Koşullu Taşıma) komutunu desteklediğini belirtir.
+	  Kodun dallanma (branching) hızını artırır.
