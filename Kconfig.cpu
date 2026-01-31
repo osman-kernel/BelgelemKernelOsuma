@@ -1,7 +1,6 @@
 # SPDX-License-Identifier: GPL-2.0
-# Osman-Kernel x86_32 İşlemci Yapılandırma Dosyası
-# Bu dosya Türkiye'nin yerli çekirdeği için optimize edilmiştir.
-
+# Osuma Millî Kernel Configuration File 
+# Türkiye's first domestic and national kernel 
 choice
 	prompt "İşlemci Ailesi Seçimi"
 	default MCORE2
